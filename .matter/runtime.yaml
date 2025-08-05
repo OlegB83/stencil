@@ -1,0 +1,39 @@
+root-folder: core
+before-command: |-
+  #!/bin/bash
+  set -e
+
+  echo "Installing dependencies for Stencil components..."
+
+  # Navigate to core directory where the actual Stencil project lives
+  cd /mnt/jetbrains/work/DarkMatter-o-0-p-3HDLWe3yDK64-r-e3d2f4f1/core
+  echo "Current directory: $(pwd)"
+
+  # Install npm dependencies, ignoring post-install scripts to avoid Puppeteer issues
+  echo "Installing npm packages (ignoring post-install scripts)..."
+  npm install --ignore-scripts
+
+  # Generate CSS files (CRITICAL - without this, Stencil build fails)
+  echo "Generating CSS files from SCSS sources..."
+  npm run css.sass
+
+  # Create .env file to skip React preflight check for webpack version conflicts
+  echo "Creating .env file..."
+  echo "SKIP_PREFLIGHT_CHECK=true" > .env
+
+  echo "Environment preparation completed successfully!"
+  echo "CSS files generated in core/css/"
+  echo "Ready to start Stencil development server..."
+preview-command: |-
+  #!/bin/bash
+  set -e
+
+  echo "Starting Stencil development server..."
+
+  # Navigate to core directory
+  cd /mnt/jetbrains/work/DarkMatter-o-0-p-3HDLWe3yDK64-r-e3d2f4f1/core
+
+  # Start the Stencil development server
+  echo "Running: npm start"
+  npm start
+preview-port: 3333
