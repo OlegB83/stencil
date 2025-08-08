@@ -13,6 +13,8 @@ before-command: |-
   echo "Installing npm packages (ignoring post-install scripts)..."
   npm install --ignore-scripts
 
+  echo "valid config"
+
   # Install missing TypeScript definitions (CRITICAL - fixes build errors)
   echo "Installing missing TypeScript type definitions..."
   npm install --save-dev @types/glob@^7.2.0 @types/minimatch@^5.1.2
