@@ -13,9 +13,17 @@ before-command: |-
   echo "Installing npm packages (ignoring post-install scripts)..."
   npm install --ignore-scripts
 
+  # Install missing TypeScript definitions (CRITICAL - fixes build errors)
+  echo "Installing missing TypeScript type definitions..."
+  npm install --save-dev @types/glob@^7.2.0 @types/minimatch@^5.1.2
+
   # Generate CSS files (CRITICAL - without this, Stencil build fails)
   echo "Generating CSS files from SCSS sources..."
   npm run css.sass
+
+  # Build the project (CRITICAL - creates www/ directory and compiled assets)
+  echo "Building Stencil project..."
+  npm run build
 
   # Create .env file to skip React preflight check for webpack version conflicts
   echo "Creating .env file..."
@@ -23,6 +31,7 @@ before-command: |-
 
   echo "Environment preparation completed successfully!"
   echo "CSS files generated in core/css/"
+  echo "Project built in core/dist/ and core/www/"
   echo "Ready to start Stencil development server..."
 preview-command: |-
   #!/bin/bash
