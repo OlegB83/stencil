@@ -21,9 +21,9 @@ before-command: |-
   echo "Generating CSS files from SCSS sources..."
   npm run css.sass
 
-  # Fix import path in index.ts (CRITICAL - fixes Rollup export error)
-  echo "Fixing import path in src/index.ts..."
-  sed -i "s/from '\.\/components'/from '\.\/components\.d'/g" src/index.ts
+  # Fix import syntax in index.ts (CRITICAL - fixes Rollup export error)
+  echo "Fixing import syntax in src/index.ts..."
+  sed -i "s/export { Components, JSX } from '\.\/components';/export * from '\.\/components.d';/g" src/index.ts
 
   # Build the project (CRITICAL - creates www/ directory and compiled assets)
   echo "Building Stencil project..."
